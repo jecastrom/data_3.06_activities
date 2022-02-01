@@ -5,6 +5,7 @@
 :my-name: Jorge Castro DAPT NOV2021
 :description: SQL queries Activities
 //:script-url: ADD SCRIPT URL HERE 
+:relcont: https://github.com/jecastrom/lab-sql-advanced-queries.git
 :toc:
 :toc-title: Activities | Description:
 :toc-placement!:
@@ -52,7 +53,7 @@ image::{image-url-ironhack}[width=70]
 
 {my-name}
 
-
+{relcont}[Related content: Lab SQL Advanced Queries]
                                                      
 ====
 ''''
@@ -81,7 +82,7 @@ toc::[]
 ====
 
 
-{script-url}[Solutions script only]
+{relcont}[Related content: Lab SQL Advanced Queries]
 
 ====
 ''''
