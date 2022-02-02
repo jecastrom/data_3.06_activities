@@ -62,15 +62,66 @@ image::{image-url-ironhack}[width=70]
 
 toc::[]
 
+== Activity 
+
+=== Use a CTE to display the first account opened by a district.
+
+`*_Answer step by step:_*`
+
+First I will output the simplest way to answer this, according to me:
+To find the first account opened by a district, in the `account` table we have the key ingredients: `district_id`, `date`. Now, with the help of the `RANK()` function we can give an order or a rank to rows. This time the key column for this is `date`. 
+
+So many accounts can be opened in one particular day so this is why RANK is usefully here. We can make windows or groups of district_id and order by date. If a date repeat, it will be given the same rank. So we will output the or the accounts ordered by rank date, so rank 1 would the the first account or accounts of a given district, then we can filter only the rank number on of each district:
 
 
-== xxxxxxxx:
+```sql
+SELECT
+    district_id,
+    account_id,
+    date,
+    rank() over (
+        PARTITION by district_id
+        ORDER BY
+            date
+    )
+FROM
+    account;
+```
 
+image::https://user-images.githubusercontent.com/63274055/152204939-d65a71b9-874f-4c0d-a051-6ebafd990555.png[width=600]
 
+Now all we need to do is to use this query as our CTE so we can properly output the report and filtering the rank 1 accounts:
 
+```sql
+WITH cte_1 AS(
+    SELECT
+        district_id,
+        account_id,
+        date,
+        rank() over (
+            PARTITION by district_id
+            ORDER BY
+                date
+        ) AS acc_op_rank
+    FROM
+        account
+)
+SELECT
+    a2 AS district,
+    account_id,
+    `date` AS first_account_opening_date
+FROM
+    cte_1 ct
+    INNER JOIN district d ON ct.district_id = d.a1
+WHERE
+    acc_op_rank = 1
+ORDER BY
+    1;
+```
 
+image::https://user-images.githubusercontent.com/63274055/152211867-b0c85272-6558-4fe8-ac97-1f77b8063f9d.png[width=600]
 
-
+`This query has 79 rows returned`
 ====
 ''''
 ====
