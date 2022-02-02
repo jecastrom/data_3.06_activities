@@ -122,6 +122,10 @@ ORDER BY
 image::https://user-images.githubusercontent.com/63274055/152211867-b0c85272-6558-4fe8-ac97-1f77b8063f9d.png[width=600]
 
 `This query has 79 rows returned`
+
+xref:Activity-3-06[Top Section]
+
+xref:Select-loans-greater-than-the-average-in-their-district[Bottom section]
 ====
 ''''
 ====
@@ -175,6 +179,10 @@ LIMIT 10;
 
 image::https://user-images.githubusercontent.com/63274055/152221204-983870dc-837a-4f76-aec8-163f53ebc6f1.png[width=600]
 
+xref:Activity-3-06[Top Section]
+
+xref:Select-loans-greater-than-the-average-in-their-district[Bottom section]
+
 == Activity
 
 === The table `client` has a field `birth_number` that encapsulates client birthday and sex. The number is in the form `YYMMDD` for men, and in the form `YYMM+50DD` for women, where `YYMMDD` is the date of birth. Create a view `client_demographics` with `client_id`, `birth_date` and `sex` fields. Use that view and a CTE to find the number of loans by status and sex.
@@ -223,7 +231,9 @@ image::https://user-images.githubusercontent.com/63274055/152251377-fb36f1fd-4f5
 WARNING: `*_error message: Warning (code 1411): Incorrect datetime value: '60703' for function str_to_date_*`
 when formatting the string of date to date format when month has only one digit instead of 2 digits
 
+xref:Activity-3-06[Top Section]
 
+xref:Select-loans-greater-than-the-average-in-their-district[Bottom section]
 
 ====
 ''''
