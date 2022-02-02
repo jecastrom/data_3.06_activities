@@ -175,6 +175,54 @@ LIMIT 10;
 
 image::https://user-images.githubusercontent.com/63274055/152221204-983870dc-837a-4f76-aec8-163f53ebc6f1.png[width=600]
 
+== Activity
+
+=== The table `client` has a field `birth_number` that encapsulates client birthday and sex. The number is in the form `YYMMDD` for men, and in the form `YYMM+50DD` for women, where `YYMMDD` is the date of birth. Create a view `client_demographics` with `client_id`, `birth_date` and `sex` fields. Use that view and a CTE to find the number of loans by status and sex.
+
+`*_Answer:_*`
+
+```sql
+DROP VIEW IF EXISTS client_demographics;
+```
+
+```sql
+CREATE VIEW client_demographics AS
+SELECT
+    client_id,
+    CASE
+        WHEN SUBSTRING(birth_number, 3, 2) > 50 THEN CONCAT(
+            SUBSTRING(birth_number, 1, 2),
+            SUBSTRING(birth_number, 3, 2) -50,
+            SUBSTRING(birth_number, 5, 2)
+        )
+        ELSE birth_number
+    END AS dob,
+    CASE
+        WHEN SUBSTRING(birth_number, 3, 2) > 50 THEN 'F'
+        ELSE 'M'
+    END AS gender
+FROM
+    client;
+```
+
+```sql
+SELECT
+    client_id,
+    dob,
+    date_format(
+        str_to_date(dob, '%y%m%d %H:%i:%s'),
+        '%Y-%m-%d %H:%i:%s'
+    ) AS dob2,
+    gender
+FROM
+    client_demographics;
+```
+
+image::https://user-images.githubusercontent.com/63274055/152251377-fb36f1fd-4f54-4bd0-b7d1-e550cbad7d94.png[width=600]
+
+CAUTION: error message: Warning (code 1411): Incorrect datetime value: '60703' for function str_to_date
+when formatting the string of date to date format when month has only one digit instead of 2 digits
+
 
 
 ====
