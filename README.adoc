@@ -220,7 +220,7 @@ FROM
 
 image::https://user-images.githubusercontent.com/63274055/152251377-fb36f1fd-4f54-4bd0-b7d1-e550cbad7d94.png[width=600]
 
-WARNING: error message: Warning (code 1411): Incorrect datetime value: '60703' for function str_to_date
+WARNING: _*`error message: Warning (code 1411): Incorrect datetime value: '60703' for function str_to_date`*_
 when formatting the string of date to date format when month has only one digit instead of 2 digits
 
 
