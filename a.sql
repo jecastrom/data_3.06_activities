@@ -1,26 +1,35 @@
-WITH cte_1 AS(
+DROP VIEW IF EXISTS last_week_withdrawals;
+CREATE VIEW last_week_withdrawals AS WITH cte_1 AS (
     SELECT
-        district_id,
-        account_id,
-        date,
-        rank() over (
-            PARTITION by district_id
-            ORDER BY
-                date
-        ) AS acc_op_rank
+        *
     FROM
-        account
+        trans
+    WHERE
+        date BETWEEN (
+            SELECT
+                max(date) - 6
+            FROM
+                trans
+        )
+        AND (
+            SELECT
+                max(date)
+            FROM
+                trans
+        )
+        AND TYPE = "VYDAJ"
 )
 SELECT
-    a2 AS district,
-    account_id,
-    `date` AS first_account_opening_date
+    client_id,
+    sum(amount) AS total_withdrawals
 FROM
-    cte_1 ct
-    INNER JOIN district d ON ct.district_id = d.a1
-WHERE
-    acc_op_rank = 1
-ORDER BY
-    1
+    disp
+    LEFT JOIN cte_1 USING (account_id)
+GROUP BY
+    client_id;
+SELECT
+    *
+FROM
+    last_week_withdrawals
 LIMIT
-    5;
+    10;

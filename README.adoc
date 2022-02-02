@@ -126,6 +126,55 @@ image::https://user-images.githubusercontent.com/63274055/152211867-b0c85272-655
 ''''
 ====
 
+== Activity
+
+=== In order to spot possible fraud, we want to create a view **last_week_withdrawals** with total withdrawals by client in the last week.
+
+`*_Answer:_*`
+
+```sql
+DROP VIEW IF EXISTS last_week_withdrawals;
+```
+```sql
+CREATE VIEW last_week_withdrawals AS WITH cte_1 AS (
+    SELECT
+        *
+    FROM
+        trans
+    WHERE
+        date BETWEEN (
+            SELECT
+                max(date) - 6
+            FROM
+                trans
+        )
+        AND (
+            SELECT
+                max(date)
+            FROM
+                trans
+        )
+        AND TYPE = "VYDAJ"
+)
+SELECT
+    client_id,
+    sum(amount) AS total_withdrawals
+FROM
+    disp
+    LEFT JOIN cte_1 USING (account_id)
+GROUP BY
+    client_id;
+```
+```sql
+SELECT
+    *
+FROM
+    last_week_withdrawals
+LIMIT 10;
+```
+
+image::https://user-images.githubusercontent.com/63274055/152221204-983870dc-837a-4f76-aec8-163f53ebc6f1.png[width=600]
+
 
 
 ====
