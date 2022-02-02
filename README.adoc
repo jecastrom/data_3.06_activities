@@ -274,9 +274,9 @@ image::https://user-images.githubusercontent.com/63274055/152255841-c8465159-24c
 
 //bla bla blafootnote:[{fn-xxx}]
 
-xref:XXX-Activity-99-to-99-|-9.99[Top Section]
+xref:Activity-3-06[Top Section]
 
-xref:Last-section[Bottom section]
+xref:Select-loans-greater-than-the-average-in-their-district[Bottom section]
 
 
 ////
