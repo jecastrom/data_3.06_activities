@@ -229,6 +229,42 @@ when formatting the string of date to date format when month has only one digit 
 ''''
 ====
 
+== Activity
+
+=== Select loans greater than the average in their district
+
+`*_Answer:_*`
+
+```sql
+WITH cte_1 AS (
+    SELECT
+        district_id,
+        floor(avg(amount)) AS avg_amount_loan
+    FROM
+        loan
+        INNER JOIN account USING (account_id)
+    GROUP BY
+        district_id
+)
+SELECT
+    a.district_id,
+    d.a2 AS district,
+    l.loan_id,
+    format(l.amount, 2, 'de_DE') AS loan_amount
+FROM
+    loan l
+    INNER JOIN account a USING (account_id)
+    INNER JOIN district d ON a.district_id = d.a1
+    INNER JOIN cte_1 c USING (district_id)
+WHERE
+    amount > avg_amount_loan
+ORDER BY
+    amount DESC;
+```
+
+image::https://user-images.githubusercontent.com/63274055/152255841-c8465159-24c5-403b-bf0b-aa47604c97b6.png[width=800]
+
+
 
 {relcont}[Related content: Lab SQL Advanced Queries]
 
